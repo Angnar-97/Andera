@@ -27,5 +27,6 @@ mytheme <- create_theme(
     info_box_bg = "#D8DEE9"
     
   ), 
-  output_file = "themes/theme_cerulean.css"
+  # output_file = "themes/theme_cerulean.css"
+  output_file = "themes/theme_orange.css"
 )

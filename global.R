@@ -31,7 +31,7 @@ library(ggstatsplot)
 library(PMCMRplus)
 library(psych)
 
-# Loading of bioconductor packs
+# Loading of bioconductor packages
 library(phyloseq)
 library(vegan)
 library(microbiome)
@@ -46,6 +46,9 @@ library(RColorBrewer)
 
 
 # Establish a common theme for the graphics.
-theme_set(theme_light() +
-            theme(text = element_text(size = 16, family = "serif")))
-
+theme_set(
+  theme_light() + 
+    theme(
+      text = element_text(size = 16, family = "serif")
+      )
+  )
