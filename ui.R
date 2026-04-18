@@ -1,10 +1,10 @@
-# ----- Interfaz de la Aplicación ----
+# ----- Application Interface ----
 ui <- dashboardPage(
   
-  # ----- Encabezado de la Dashboard -----  
+  # ----- Dashboard Header -----   
   dashboardHeader(title = "Andera - Exploración de Microbiomas"),
   
-  # ----- Panel del Dashboard ----- 
+  # ----- Dashboard Panel ----- 
   dashboardSidebar(
     # Código para la barra lateral
     sidebarMenu(
@@ -22,7 +22,7 @@ ui <- dashboardPage(
   dashboardBody(
     
     # Se añade el tema que se ha creado en fresh para la Dashboard. 
-    use_theme(mytheme),
+    includeCSS("themes/theme_cerulean.css"),
     
     
     tabItems(

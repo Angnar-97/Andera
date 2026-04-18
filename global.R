@@ -1,9 +1,9 @@
 # ----- Project Description ----
 #
 # Shiny application for the study of microbiomes
-# Date: 14/07/2023
+# Date: 18/04/2026
 # Author: Alejandro Navas González
-#
+# 
 
 # ----- General Zone ----
 
@@ -36,7 +36,7 @@ library(phyloseq)
 library(vegan)
 library(microbiome)
 library(ComplexHeatmap)
-library(microViz)
+# library(microViz)
 
 # Loading of packages to edit the graphics palettes
 library(palettetown)
