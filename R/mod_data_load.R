@@ -76,7 +76,34 @@ mod_data_load_server <- function(id) {
     pending_ps <- reactive({
       if (input$data_source == "Archivo") {
         req(input$file1)
-        readRDS(input$file1$datapath)
+        # Validar que el RDS contiene un phyloseq
+        ps_candidate <- tryCatch(
+          readRDS(input$file1$datapath),
+          error = function(e) {
+            shinyalert::shinyalert(
+              title = "RDS ilegible",
+              text  = paste(
+                "No se pudo leer el archivo. Verifica que es un .rds válido",
+                "exportado con saveRDS()."
+              ),
+              type  = "error"
+            )
+            NULL
+          }
+        )
+        if (is.null(ps_candidate)) return(NULL)
+        if (!inherits(ps_candidate, "phyloseq")) {
+          shinyalert::shinyalert(
+            title = "Objeto no compatible",
+            text  = sprintf(
+              "El archivo contiene un objeto de clase '%s'; se esperaba un phyloseq. Exporta tu objeto con saveRDS(ps, 'archivo.rds') antes de subirlo.",
+              paste(class(ps_candidate), collapse = "/")
+            ),
+            type  = "warning"
+          )
+          return(NULL)
+        }
+        ps_candidate
       } else {
         load_example_dataset(input$dataset)
       }

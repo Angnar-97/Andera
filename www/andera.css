@@ -14,15 +14,15 @@
   --an-surface:     #FFFFFF;
   --an-surface-alt: #F1ECDF;
 
-  /* --- Ink / brand (tono sage) --- */
-  --an-ink:         #2A3D32;   /* verde bosque oscuro — navbar, headings */
+  /* --- Ink / brand (aubergine editorial) --- */
+  --an-ink:         #3B2A4A;   /* aubergine profundo — navbar, headings, body text */
   --an-ink-soft:    #4A6D5E;   /* sage profundo — primary */
   --an-ink-lighter: #6D8A7A;   /* sage medio — hovers / highlights */
 
   /* --- Accents --- */
-  --an-terracotta:      #B87355;   /* secondary / accent editorial dominante */
-  --an-terracotta-soft: #EAD5C6;
-  --an-gold:            #C4A962;   /* accent editorial — eyebrows, selección */
+  --an-terracotta:      #C32D28;   /* cinabrio — accent editorial dominante */
+  --an-terracotta-soft: #F4D8D6;   /* cinabrio washed */
+  --an-gold:            #C4A962;   /* gold — eyebrows, selección, hover sutil */
   --an-gold-soft:       #E5D5A8;
   --an-leaf:            #8FA872;   /* success / sage leaf */
   --an-water:           #5B7D8C;   /* info */
@@ -37,9 +37,9 @@
   /* --- Structure --- */
   --an-hairline:        #E5DDC9;
   --an-hairline-strong: #D4CAB2;
-  --an-shadow-xs:  0 1px 2px rgba(42, 61, 50, 0.04);
-  --an-shadow-sm:  0 2px 6px rgba(42, 61, 50, 0.06);
-  --an-shadow-md:  0 6px 20px rgba(42, 61, 50, 0.08);
+  --an-shadow-xs:  0 1px 2px rgba(59, 42, 74, 0.04);
+  --an-shadow-sm:  0 2px 6px rgba(59, 42, 74, 0.06);
+  --an-shadow-md:  0 6px 20px rgba(59, 42, 74, 0.08);
 
   /* --- Type scale --- */
   --an-font-serif: "Crimson Pro", "Source Serif Pro", Georgia, serif;
@@ -181,6 +181,44 @@ nav.navbar {
 .andera-navbar-spacer { height: 8px; }
 
 /* ----------------------------------------------------------------
+   Section labels in the flat navbar
+   `nav_item(tags$span(class = "andera-nav-section", "..."))` rinde
+   un divisor visual entre grupos de tabs (DATOS, ANÁLISIS, SOBRE).
+   ---------------------------------------------------------------- */
+
+.navbar .nav-item .andera-nav-section,
+.navbar .nav-item span.andera-nav-section {
+  display: inline-block;
+  padding: 0.55rem 0.55rem 0.55rem 1.1rem;
+  margin-left: 0.35rem;
+  font-family: var(--an-font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--an-gold);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+  line-height: 1.4;
+  align-self: center;
+}
+
+/* En navbar collapsada (móvil) los dividers se renderizan como item normal:
+   ocultamos el border-left y centramos. */
+@media (max-width: 992px) {
+  .navbar .nav-item .andera-nav-section,
+  .navbar .nav-item span.andera-nav-section {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    margin: 8px 0 0 0;
+    padding: 8px 0;
+    width: 100%;
+  }
+}
+
+/* ----------------------------------------------------------------
    Eyebrow labels (small-caps tracked)
    ---------------------------------------------------------------- */
 
@@ -288,12 +326,131 @@ nav.navbar {
 }
 
 /* ----------------------------------------------------------------
+   Form helpers (helper text bajo input)
+   ---------------------------------------------------------------- */
+
+.andera-form-help {
+  display: block;
+  margin: 4px 0 8px 0;
+  color: var(--an-text-soft);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.andera-form-help strong {
+  color: var(--an-ink);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------
+   Result sections (varias tablas / blocks dentro de una card)
+   ---------------------------------------------------------------- */
+
+.andera-result-section {
+  padding: 12px 0;
+  border-top: 1px solid var(--an-hairline);
+}
+.andera-result-section:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+.andera-result-section .andera-eyebrow {
+  margin-bottom: 6px;
+}
+.andera-result-section table {
+  margin-top: 6px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+   Interpretive alerts (success / warning / info)
+   ---------------------------------------------------------------- */
+
+.andera-alert {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  border-left: 3px solid;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  background: var(--an-surface);
+}
+.andera-alert strong { color: var(--an-ink); }
+.andera-alert p {
+  margin: 6px 0 0 0;
+  color: var(--an-text-soft);
+}
+.andera-alert-info {
+  border-left-color: var(--an-water);
+  background: rgba(91, 125, 140, 0.06);
+}
+.andera-alert-success {
+  border-left-color: var(--an-leaf);
+  background: rgba(143, 168, 114, 0.07);
+}
+.andera-alert-warning {
+  border-left-color: var(--an-terracotta);
+  background: rgba(195, 45, 40, 0.07);
+}
+.andera-alert-warning strong { color: var(--an-terracotta); }
+
+/* ----------------------------------------------------------------
+   Reproducibility metadata (definition list compacta)
+   ---------------------------------------------------------------- */
+
+.andera-meta-dl {
+  display: grid;
+  grid-template-columns: minmax(140px, max-content) 1fr;
+  gap: 6px 18px;
+  margin: 8px 0 0 0;
+  font-size: 0.9rem;
+}
+.andera-meta-dl dt {
+  color: var(--an-text-soft);
+  font-weight: 500;
+  align-self: baseline;
+}
+.andera-meta-dl dd {
+  margin: 0;
+  color: var(--an-ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.andera-meta-dl dd code {
+  background: var(--an-surface-alt);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.88rem;
+}
+
+/* ----------------------------------------------------------------
+   Reproducir en R (verbatim code preview)
+   ---------------------------------------------------------------- */
+
+.andera-r-code pre {
+  background: #3B2A4A;
+  color: #F1ECDF;
+  padding: 14px 16px;
+  border-radius: 4px;
+  font-family: var(--an-font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  max-height: 300px;
+  overflow: auto;
+  margin: 6px 0;
+}
+.andera-r-code pre.shiny-text-output {
+  white-space: pre;
+  word-wrap: normal;
+}
+
+/* ----------------------------------------------------------------
    Hero (home)
    ---------------------------------------------------------------- */
 
 .andera-hero {
   background:
-    radial-gradient(ellipse at 80% 10%, rgba(184, 115, 85, 0.07) 0%, transparent 48%),
+    radial-gradient(ellipse at 80% 10%, rgba(195, 45, 40, 0.07) 0%, transparent 48%),
     radial-gradient(ellipse at 50% 5%,  rgba(196, 169, 98, 0.08) 0%, transparent 42%),
     radial-gradient(ellipse at 10% 90%, rgba(74, 109, 94, 0.10) 0%, transparent 52%),
     var(--an-bg);
@@ -320,7 +477,7 @@ nav.navbar {
   width: 220px;
   height: auto;
   opacity: 0.78;
-  filter: drop-shadow(0 4px 14px rgba(42, 61, 50, 0.10));
+  filter: drop-shadow(0 4px 14px rgba(59, 42, 74, 0.10));
   transition: opacity 0.2s, transform 0.3s ease, filter 0.3s ease;
 }
 .andera-hero-logo:hover {
@@ -369,20 +526,38 @@ nav.navbar {
 }
 
 .andera-cta {
-  background: var(--an-ink) !important;
-  border-color: var(--an-ink) !important;
-  color: #FFFFFF !important;
-  padding: 12px 26px !important;
-  font-weight: 500 !important;
+  background:     var(--an-ink) !important;          /* forest #3B2A4A */
+  border-color:   var(--an-ink) !important;
+  color:          #FFFFFF !important;
+  padding:        12px 26px !important;
+  font-weight:    500 !important;
   letter-spacing: 0.01em;
-  border-radius: 3px !important;
-  border-bottom: none !important;
-  transition: background 0.15s, transform 0.15s;
+  border-radius:  3px !important;
+  border-bottom:  none !important;
+  opacity:        1 !important;
+  transition:     background 0.15s ease,
+                  border-color 0.15s ease,
+                  transform 0.15s ease,
+                  box-shadow 0.15s ease;
 }
-.andera-cta:hover {
-  background: var(--an-ink-soft) !important;
-  border-color: var(--an-ink-soft) !important;
-  transform: translateY(-1px);
+.andera-cta:hover,
+.andera-cta:focus,
+.andera-cta:focus-visible {
+  /* Mantenemos la base dark + uplift sutil + sombra dorada para hint
+     de interactividad, sin tirar el contraste a sage. */
+  background:    var(--an-ink) !important;
+  border-color:  var(--an-ink) !important;
+  color:         #FFFFFF !important;
+  opacity:       1 !important;
+  transform:     translateY(-1px);
+  box-shadow:    0 6px 18px rgba(196, 169, 98, 0.28),
+                  0 2px 6px rgba(59, 42, 74, 0.18);
+}
+.andera-cta:active {
+  background:    #251B30 !important;                 /* forest aún más oscuro al click */
+  border-color:  #251B30 !important;
+  transform:     translateY(0);
+  box-shadow:    inset 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 .andera-cta .fa, .andera-cta .fas {
   margin-left: 8px;
@@ -705,25 +880,69 @@ nav.navbar {
 }
 
 .btn-primary {
-  background-color: var(--an-ink-soft) !important;
-  border-color: var(--an-ink-soft) !important;
-  color: #FFFFFF !important;
+  background-color: var(--an-ink-soft) !important;   /* sage  #4A6D5E */
+  border-color:     var(--an-ink-soft) !important;
+  color:            #FFFFFF !important;
+  opacity:          1 !important;
+  transition:       background-color 0.15s ease,
+                    border-color     0.15s ease,
+                    transform        0.12s ease,
+                    box-shadow       0.15s ease;
 }
 .btn-primary:hover,
-.btn-primary:focus {
-  background-color: var(--an-ink) !important;
-  border-color: var(--an-ink) !important;
+.btn-primary:focus,
+.btn-primary:focus-visible {
+  background-color: #3F5C50 !important;              /* sage -10% (≈8:1 contrast) */
+  border-color:     #3F5C50 !important;
+  color:            #FFFFFF !important;
+  opacity:          1 !important;
+  box-shadow:       0 2px 8px rgba(59, 42, 74, 0.18);
+  transform:        translateY(-1px);
+}
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:focus:active {
+  background-color: var(--an-ink) !important;        /* forest #3B2A4A — solo al click */
+  border-color:     var(--an-ink) !important;
+  color:            #FFFFFF !important;
+  opacity:          1 !important;
+  transform:        translateY(0);
+  box-shadow:       inset 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+.btn-primary:disabled,
+.btn-primary.disabled {
+  background-color: var(--an-ink-lighter) !important;
+  border-color:     var(--an-ink-lighter) !important;
+  color:            rgba(255, 255, 255, 0.85) !important;
+  opacity:          0.65 !important;
+  cursor:           not-allowed;
+  transform:        none;
+  box-shadow:       none;
 }
 
 .btn-default, .btn-light, .btn-outline-secondary {
-  background: var(--an-surface) !important;
-  border-color: var(--an-hairline-strong) !important;
-  color: var(--an-ink) !important;
+  background:    var(--an-surface) !important;       /* blanco */
+  border-color:  var(--an-hairline-strong) !important;
+  color:         var(--an-ink) !important;           /* forest */
+  opacity:       1 !important;
+  transition:    background 0.15s ease,
+                 border-color 0.15s ease,
+                 color 0.15s ease;
 }
-.btn-outline-secondary:hover {
-  background: var(--an-surface-alt) !important;
-  border-color: var(--an-ink-soft) !important;
-  color: var(--an-ink) !important;
+.btn-default:hover,
+.btn-light:hover,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:focus-visible {
+  background:    var(--an-surface-alt) !important;   /* crema clara */
+  border-color:  var(--an-ink-soft) !important;
+  color:         var(--an-ink) !important;
+  opacity:       1 !important;
+}
+.btn-outline-secondary:active {
+  background:    var(--an-hairline) !important;
+  border-color:  var(--an-ink-soft) !important;
+  color:         var(--an-ink) !important;
 }
 
 .btn-lg {
@@ -734,15 +953,23 @@ nav.navbar {
 /* Download button nudge */
 a.btn[id*="download"],
 a.btn[id*="dl_"] {
-  background: var(--an-surface) !important;
-  border: 1px solid var(--an-hairline-strong) !important;
-  color: var(--an-ink-soft) !important;
-  font-size: 0.85rem;
-  padding: 6px 12px;
+  background:    var(--an-surface) !important;
+  border:        1px solid var(--an-hairline-strong) !important;
+  color:         var(--an-ink-soft) !important;
+  font-size:     0.85rem;
+  padding:       6px 12px;
+  opacity:       1 !important;
+  transition:    background 0.15s ease, color 0.15s ease,
+                  border-color 0.15s ease;
 }
 a.btn[id*="download"]:hover,
-a.btn[id*="dl_"]:hover {
-  background: var(--an-surface-alt) !important;
+a.btn[id*="dl_"]:hover,
+a.btn[id*="download"]:focus,
+a.btn[id*="dl_"]:focus {
+  background:    var(--an-surface-alt) !important;
+  color:         var(--an-ink) !important;
+  border-color:  var(--an-ink-soft) !important;
+  opacity:       1 !important;
 }
 
 /* ----------------------------------------------------------------

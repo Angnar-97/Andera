@@ -1,6 +1,8 @@
 # ----- Interfaz de la Aplicación ----
-# Top navigation bar construida con bslib::page_navbar. Grupos:
-# Datos y Análisis (cada uno es un nav_menu).
+# Top navigation bar plano con bslib::page_navbar.
+# Las pestañas se agrupan visualmente por secciones (DATOS · ANÁLISIS · SOBRE)
+# usando `nav_item` con la clase `andera-nav-section` como divisor no
+# clickeable. Esto da la jerarquía sin esconder pestañas tras submenús.
 
 ui <- tagList(
   # ----- Recursos externos (favicon, CSS, meta) -----
@@ -75,7 +77,7 @@ ui <- tagList(
       collapsible = TRUE
     ),
 
-    # ----- Header global (aparece sobre todas las pestañas) -----
+    # ----- Header global (banner del dataset activo) -----
     header = tagList(
       tags$div(class = "andera-navbar-spacer"),
       mod_dataset_banner_ui("banner")
@@ -102,62 +104,89 @@ ui <- tagList(
           tags$div(class = "andera-footer-col",
             tags$span(class = "andera-eyebrow", "Código"),
             tags$a(href = "https://github.com/Angnar-97",
-                   target = "_blank", rel = "noopener", "GitHub \u2197"),
+                   target = "_blank", rel = "noopener", "GitHub ↗"),
             tags$br(),
-            tags$span(class = "andera-muted", "Proyecto independiente \u00a9 2026")
+            tags$span(class = "andera-muted", "Proyecto independiente © 2026")
           )
         )
       )
     ),
 
-    # ----- Pestañas -----
+    # =====================================================================
+    # Pestañas (plano · agrupado por secciones via nav_item divisores)
+    # =====================================================================
+
     bslib::nav_panel(
-      title = tagList(bsicons::bs_icon("house"), " Inicio"),
-      value = "home",
+      title = "Inicio", value = "home",
       mod_home_ui("home")
     ),
 
-    bslib::nav_menu(
-      title = tagList(bsicons::bs_icon("database"), " Datos"),
-      bslib::nav_panel(
-        title = "Carga de Datos", value = "data_load",
-        mod_data_load_ui("data_load")
-      ),
-      bslib::nav_panel(
-        title = "Filtrado", value = "filtering",
-        mod_filtering_ui("filtering")
-      )
+    # ----- DATOS -----
+    bslib::nav_item(tags$span(class = "andera-nav-section", "Datos")),
+    bslib::nav_panel(
+      title = "Carga", value = "data_load",
+      mod_data_load_ui("data_load")
+    ),
+    bslib::nav_panel(
+      title = "DADA2 (FASTQ)", value = "dada2",
+      mod_dada2_ui("dada2")
+    ),
+    bslib::nav_panel(
+      title = "Filtrado", value = "filtering",
+      mod_filtering_ui("filtering")
+    ),
+    bslib::nav_panel(
+      title = "Decontam", value = "decontam",
+      mod_decontam_ui("decontam")
     ),
 
-    bslib::nav_menu(
-      title = tagList(bsicons::bs_icon("graph-up"), " Análisis"),
-      bslib::nav_panel(
-        title = "Diversidad Alfa y Beta", value = "diversity",
-        mod_diversity_ui("diversity")
-      ),
-      bslib::nav_panel(
-        title = "Mapas de Calor", value = "heatmaps",
-        mod_heatmaps_ui("heatmaps")
-      ),
-      bslib::nav_panel(
-        title = "PCoA", value = "pcoa",
-        mod_pcoa_ui("pcoa")
-      ),
-      bslib::nav_panel(
-        title = "PERMANOVA", value = "permanova",
-        mod_permanova_ui("permanova")
-      ),
-      bslib::nav_panel(
-        title = "Grafos", value = "grafos",
-        mod_graphs_ui("grafos")
-      )
+    # ----- ANÁLISIS -----
+    bslib::nav_item(tags$span(class = "andera-nav-section", "Análisis")),
+    bslib::nav_panel(
+      title = "Rarefacción", value = "rarefaction",
+      mod_rarefaction_ui("rarefaction")
+    ),
+    bslib::nav_panel(
+      title = "Composición", value = "composition",
+      mod_composition_ui("composition")
+    ),
+    bslib::nav_panel(
+      title = "Diversidad", value = "diversity",
+      mod_diversity_ui("diversity")
+    ),
+    bslib::nav_panel(
+      title = "Heatmaps", value = "heatmaps",
+      mod_heatmaps_ui("heatmaps")
+    ),
+    bslib::nav_panel(
+      title = "Ordenación", value = "ordination",
+      mod_ordination_ui("ordination")
+    ),
+    bslib::nav_panel(
+      title = "PERMANOVA", value = "permanova",
+      mod_permanova_ui("permanova")
+    ),
+    bslib::nav_panel(
+      title = "Abundancia diferencial", value = "diffabund",
+      mod_diffabund_ui("diffabund")
+    ),
+    bslib::nav_panel(
+      title = "Vistas avanzadas", value = "microbiome_views",
+      mod_microbiome_views_ui("microbiome_views")
+    ),
+    bslib::nav_panel(
+      title = "Red muestras", value = "grafos",
+      mod_graphs_ui("grafos")
+    ),
+    bslib::nav_panel(
+      title = "Red taxa", value = "microbial_net",
+      mod_microbial_network_ui("microbial_net")
     ),
 
     bslib::nav_spacer(),
 
     bslib::nav_panel(
-      title = tagList(bsicons::bs_icon("envelope"), " Contacto"),
-      value = "contact",
+      title = "Contacto", value = "contact",
       mod_contact_ui("contact")
     )
   )

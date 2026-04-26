@@ -99,13 +99,14 @@ mod_filtering_server <- function(id, physeq) {
         return()
       }
 
-      filtered <- tryCatch(
-        microViz::ps_filter(
-          physeq_filtered(),
-          eval(parse(text = input$variable)) %in% input$value
-        ),
-        error = function(e) NULL
-      )
+      # Filtrado seguro vía phyloseq::prune_samples — sin eval/parse
+      filtered <- tryCatch({
+        ps_in <- physeq_filtered()
+        sd    <- as(phyloseq::sample_data(ps_in), "data.frame")
+        keep  <- as.character(sd[[input$variable]]) %in%
+                 as.character(input$value)
+        if (!any(keep)) NULL else phyloseq::prune_samples(keep, ps_in)
+      }, error = function(e) NULL)
 
       if (is.null(filtered)) {
         shinyalert::shinyalert(

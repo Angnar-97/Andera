@@ -25,8 +25,14 @@ mod_graphs_ui <- function(id) {
             ),
             selectInput(
               ns("distance"), "Distancia ecológica",
-              choices  = c("jaccard", "bray", "unifrac", "wunifrac"),
+              choices  = ANDERA_DISTANCES,
               selected = "jaccard"
+            ),
+            tags$small(class = "andera-form-help",
+              tags$strong("UniFrac"), " requiere árbol filogenético. ",
+              tags$strong("Aitchison"),
+              " es composicional pero solo aplica a redes de muestras ",
+              "(no funciona con redes de taxa)."
             ),
             sliderInput(
               ns("maxdist"), "Distancia máxima (umbral de enlace)",
@@ -87,11 +93,24 @@ mod_graphs_server <- function(id, physeq) {
       req(physeq(), input$distance, input$maxdist, input$type)
       ps <- physeq()
 
-      if (input$distance %in% c("unifrac", "wunifrac") && !has_tree(ps)) {
+      if (distance_requires_tree(input$distance)) {
+        v <- validate_for_unifrac(ps)
+        if (!isTRUE(v$ok)) {
+          shinyalert::shinyalert(
+            title = "Configuración inválida",
+            text  = v$reason, type = "warning"
+          )
+          return()
+        }
+      }
+
+      # Aitchison no aplica a red de taxa: la distancia se computa entre
+      # muestras (CLR + Eucl. opera sobre filas de muestras).
+      if (input$distance == "aitchison" && input$type == "taxa") {
         shinyalert::shinyalert(
-          title = "Error",
-          text  = "La distancia seleccionada requiere un árbol filogenético.",
-          type  = "error"
+          title = "Combinación no soportada",
+          text  = "Aitchison solo está definido para redes de muestras. Cambia a Bray-Curtis o Jaccard para taxa.",
+          type  = "warning"
         )
         return()
       }
@@ -103,14 +122,16 @@ mod_graphs_server <- function(id, physeq) {
         withProgress(
           message = "Construyendo red",
           detail  = paste("Distancia:", input$distance),
-          value   = NULL,
-          phyloseq::plot_net(
-            ps,
-            distance = input$distance,
-            maxdist  = input$maxdist,
-            color    = color_var,
-            type     = input$type
-          )
+          value   = NULL, {
+            d <- compute_distance(ps, input$distance)
+            phyloseq::plot_net(
+              ps,
+              distance = d,
+              maxdist  = input$maxdist,
+              color    = color_var,
+              type     = input$type
+            )
+          }
         ),
         error = function(e) {
           shinyalert::shinyalert(

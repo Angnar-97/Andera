@@ -49,3 +49,6 @@ Desktop.ini
 
 # ---- Claude Code worktrees / local scratch ----
 .claude/
+
+# ---- Legacy / training material (no debe entrar en git) ----
+legacy/

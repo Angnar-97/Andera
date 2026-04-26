@@ -1,21 +1,21 @@
 # ----- Tema bslib + paleta ggplot para Andera -----
 #
-# Paleta "medioambiental / microbioma" — tono sage + toque dorado:
-#   primary   #4A6D5E  (verde sage profundo — primary accesible sobre blanco)
-#   secondary #B87355  (terracota — suelo/tierra)
-#   success   #8FA872  (hoja sage — más muted que leaf verde)
+# Paleta editorial · aubergine + cinabrio + toque dorado:
+#   primary   #4A6D5E  (sage profundo — primary de botones, sobre blanco/crema)
+#   secondary #C32D28  (cinabrio — accent editorial, numerales, eyebrows)
+#   success   #8FA872  (sage leaf — más muted que leaf verde puro)
 #   info      #5B7D8C  (azul grisáceo — agua)
 #   warning   #D4A437  (ámbar — avisos visibles)
 #   danger    #8C3B3B  (oxblood)
 #   bg        #FAF7F0  (crema/hueso)
-#   fg        #2A3D32  (verde bosque oscuro — más cálido que el forest puro)
+#   fg        #3B2A4A  (aubergine profundo — navbar, headings, body text)
 #
-# Toque dorado (accent secundario, editorial):
-#   gold      #C4A962  (usado en eyebrows, ::selection, hover sutiles)
+# Toque dorado (accent secundario sutil):
+#   gold      #C4A962  (eyebrows, ::selection, hover de árbol celta)
 #
 # Tipografía editorial:
-#   Crimson Pro   — display / headings
-#   Inter         — body
+#   Crimson Pro    — display / headings
+#   Inter          — body
 #   JetBrains Mono — código
 
 andera_theme <- function() {
@@ -23,20 +23,20 @@ andera_theme <- function() {
     version      = 5,
     bootswatch   = NULL,
     primary      = "#4A6D5E",
-    secondary    = "#B87355",
+    secondary    = "#C32D28",
     success      = "#8FA872",
     info         = "#5B7D8C",
     warning      = "#D4A437",
     danger       = "#8C3B3B",
     bg           = "#FAF7F0",
-    fg           = "#2A3D32",
+    fg           = "#3B2A4A",
     base_font    = bslib::font_google("Inter"),
     heading_font = bslib::font_google("Crimson Pro"),
     code_font    = bslib::font_google("JetBrains Mono"),
 
     # ---- Global tokens ----
     "body-bg"          = "#FAF7F0",
-    "body-color"       = "#2A3D32",
+    "body-color"       = "#3B2A4A",
     "border-radius"    = "0.5rem",
     "border-radius-sm" = "0.35rem",
     "border-radius-lg" = "0.65rem",
@@ -47,7 +47,7 @@ andera_theme <- function() {
     "card-bg"           = "#FFFFFF",
 
     # ---- Navbar ----
-    "navbar-bg"                 = "#2A3D32",
+    "navbar-bg"                 = "#3B2A4A",
     "navbar-dark-color"         = "rgba(255,255,255,0.72)",
     "navbar-dark-hover-color"   = "#FFFFFF",
     "navbar-dark-active-color"  = "#FFFFFF",
@@ -61,13 +61,13 @@ andera_theme <- function() {
 }
 
 # ---------------------------------------------------------------------------
-# Paleta ggplot coherente con el tema (sage + terracota + toque dorado).
+# Paleta ggplot coherente con el tema (sage + cinabrio + toque dorado).
 # ---------------------------------------------------------------------------
 
 andera_palette <- c(
   "#4A6D5E",  # sage deep (primary)
-  "#B87355",  # terracota (secondary)
-  "#C4A962",  # gold (accent editorial)
+  "#C32D28",  # cinabrio (accent editorial)
+  "#C4A962",  # gold
   "#8FA872",  # sage leaf
   "#5B7D8C",  # water blue
   "#8C3B3B",  # oxblood
